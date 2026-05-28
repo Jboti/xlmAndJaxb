@@ -3,7 +3,7 @@ package org.example.xml;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
-import org.example.model.ProductCatalog;
+import org.example.products.model.ProductCatalog;
 
 import java.io.File;
 

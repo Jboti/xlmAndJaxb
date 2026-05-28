@@ -1,8 +1,8 @@
 package org.example;
 
 import org.example.config.DBConnection;
-import org.example.model.Product;
-import org.example.model.ProductCatalog;
+import org.example.products.model.Product;
+import org.example.products.model.ProductCatalog;
 import org.example.repository.ProductRepository;
 import org.example.xml.XmlParser;
 import org.example.xml.XmlValidator;
@@ -16,6 +16,12 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //xmlToDatabase();
+        databaseToXml();
+
+    }
+
+    private static void xmlToDatabase() {
         // Database Connection
         System.out.println("Connecting to database...");
 
@@ -66,5 +72,9 @@ public class Main {
         }
 
         System.out.println("Insert finished.");
+    }
+
+    private static void databaseToXml() {
+
     }
 }

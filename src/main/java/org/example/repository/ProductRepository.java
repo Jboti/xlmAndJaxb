@@ -1,9 +1,8 @@
 package org.example.repository;
 
 import org.example.config.DBConnection;
-import org.example.model.Product;
+import org.example.products.model.Product;
 
-import java.math.BigDecimal;
 import java.sql.*;
 
 public class ProductRepository {
