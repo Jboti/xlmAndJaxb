@@ -8,6 +8,7 @@ import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
 import org.example.xml.XmlParser;
 import org.example.xml.XmlValidator;
+import org.example.xml.XmlWriter;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 public class Main {
 
     private static final String XML_PATH = "src/main/resources/products.xml";
+    private static final String CUSTOMERS_OUTPUT_PATH = "src/main/resources/customers.xml";
 
     public static void main(String[] args) {
 
@@ -98,6 +100,9 @@ public class Main {
             return;
         }
         System.out.println("Successfully fetched customer data.");
+
+        // Write data to XML
+        XmlWriter.writeCustomers(customers,CUSTOMERS_OUTPUT_PATH );
 
 
     }

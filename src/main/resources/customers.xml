@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customers>
+    <customer>
+        <customerCode>CUST001</customerCode>
+        <fullName>Anna Kovács</fullName>
+        <email>anna@example.com</email>
+        <city>Budapest</city>
+        <age>28</age>
+        <active>true</active>
+        <signupDate>2024-01-15</signupDate>
+    </customer>
+    <customer>
+        <customerCode>CUST002</customerCode>
+        <fullName>Bence Nagy</fullName>
+        <email>bence@example.com</email>
+        <city>Szeged</city>
+        <age>35</age>
+        <active>true</active>
+        <signupDate>2023-11-02</signupDate>
+    </customer>
+    <customer>
+        <customerCode>CUST003</customerCode>
+        <fullName>Eszter Tóth</fullName>
+        <email>eszter@example.com</email>
+        <city>Debrecen</city>
+        <age>22</age>
+        <active>false</active>
+        <signupDate>2022-06-19</signupDate>
+    </customer>
+</customers>
