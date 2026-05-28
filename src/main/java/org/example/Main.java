@@ -27,17 +27,7 @@ public class Main {
 
     private static void xmlToDatabase() {
         // Database Connection
-        System.out.println("Connecting to database...");
-
-        try (Connection conn = DBConnection.getConnection()) {
-            if (conn != null && !conn.isClosed()) {
-                System.out.println("Successfully connected to database.");
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to connect to database.");
-            System.err.println("Reason: " + e.getMessage());
-            return;
-        }
+        if (!testDatabaseConnection()) return;
 
         // XML Validation
         final boolean validXml = XmlValidator.validate(XML_PATH);
@@ -80,17 +70,7 @@ public class Main {
 
     private static void databaseToXml() {
         // Database Connection
-        System.out.println("Connecting to database...");
-
-        try (Connection conn = DBConnection.getConnection()) {
-            if (conn != null && !conn.isClosed()) {
-                System.out.println("Successfully connected to database.");
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to connect to database.");
-            System.err.println("Reason: " + e.getMessage());
-            return;
-        }
+        if (!testDatabaseConnection()) return;
 
         // Fetch data
         Customers customers = CustomerRepository.getAllCustomers();
@@ -104,6 +84,21 @@ public class Main {
         // Write data to XML
         XmlWriter.writeCustomers(customers,CUSTOMERS_OUTPUT_PATH );
 
+    }
 
+
+    private static boolean testDatabaseConnection() {
+        System.out.println("Connecting to database...");
+
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn != null && !conn.isClosed()) {
+                System.out.println("Successfully connected to database.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to connect to database.");
+            System.err.println("Reason: " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 }
