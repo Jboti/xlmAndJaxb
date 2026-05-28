@@ -1,8 +1,10 @@
 package org.example;
 
 import org.example.config.DBConnection;
+import org.example.customers.model.Customers;
 import org.example.products.model.Product;
 import org.example.products.model.ProductCatalog;
+import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
 import org.example.xml.XmlParser;
 import org.example.xml.XmlValidator;
@@ -75,6 +77,28 @@ public class Main {
     }
 
     private static void databaseToXml() {
+        // Database Connection
+        System.out.println("Connecting to database...");
+
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn != null && !conn.isClosed()) {
+                System.out.println("Successfully connected to database.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to connect to database.");
+            System.err.println("Reason: " + e.getMessage());
+            return;
+        }
+
+        // Fetch data
+        Customers customers = CustomerRepository.getAllCustomers();
+
+        if(customers == null) {
+            System.err.println("Couldnt fetch customers data from database.");
+            return;
+        }
+        System.out.println("Successfully fetched customer data.");
+
 
     }
 }
