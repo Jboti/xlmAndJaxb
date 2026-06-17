@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:redefine schemaLocation="products.xsd">
+        <xs:complexType name="ProductType">
+            <xs:complexContent>
+                <xs:extension base="ProductType">
+                    <xs:sequence>
+                        <xs:element name="reviews" type="ReviewsType" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
+    
+    <xs:complexType name="ReviewsType">
+        <xs:sequence>
+            <xs:element name="review" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="username" type="xs:string" default="anonymus"/>
+                        <xs:element name="comment" type="xs:string" minOccurs="0"/>
+                        <xs:element name="rating" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
