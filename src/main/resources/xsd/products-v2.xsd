@@ -2,7 +2,8 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:redefine schemaLocation="products.xsd">
+    <xs:redefine schemaLocation="products-v1.xsd">
+
         <xs:complexType name="ProductType">
             <xs:complexContent>
                 <xs:extension base="ProductType">
@@ -12,12 +13,13 @@
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
+
     </xs:redefine>
 
     
     <xs:complexType name="ReviewsType">
         <xs:sequence>
-            <xs:element name="review" minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="review" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="username" type="xs:string" default="anonymus"/>

@@ -2,7 +2,8 @@
 
 
 <productCatalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="../xsd/productsV2.xsd">
+                xsi:noNamespaceSchemaLocation="../xsd/products-v2.xsd"
+                version="v2">
 
     <product>
         <sku>ELEC-001-FEK</sku>
@@ -16,7 +17,7 @@
         <inStock>true</inStock>
         <releaseDate>2023-09-15</releaseDate>
         <lastUpdated>2024-11-20T08:30:00</lastUpdated>
-        <rating>4.6</rating>
+        <rating>3</rating>
         <tags>
             <tag>audio</tag>
             <tag>bluetooth</tag>
@@ -50,7 +51,7 @@
         <inStock>true</inStock>
         <releaseDate>2022-03-01</releaseDate>
         <lastUpdated>2025-01-10T14:00:00</lastUpdated>
-        <rating>4.9</rating>
+        <rating>4.5</rating>
         <tags>
             <tag>bútor</tag>
             <tag>fa</tag>
@@ -58,6 +59,19 @@
         </tags>
         <manufacturer>NordicCraft Magyarország</manufacturer>
         <warrantyYears>5</warrantyYears>
+
+        <reviews>
+            <review>
+                <username>Jane Doe</username>
+                <comment>Pont olyan amilyet szerettem volna</comment>
+                <rating>5</rating>
+            </review>
+            <review>
+                <username>CoolUsername</username>
+                <comment>Jó</comment>
+                <rating>4</rating>
+            </review>
+        </reviews>
     </product>
 
     <product>
@@ -71,13 +85,21 @@
         <inStock>false</inStock>
         <releaseDate>2008-08-01</releaseDate>
         <lastUpdated>2024-06-01T00:00:00</lastUpdated>
-        <rating>4.8</rating>
+        <rating>5</rating>
         <tags>
             <tag>programozás</tag>
             <tag>java</tag>
         </tags>
         <manufacturer>Prentice Hall</manufacturer>
         <warrantyYears>0</warrantyYears>
+        
+        <reviews>
+            <review>
+                <username></username>
+                <comment>Hasznos</comment>
+                <rating>5</rating>
+            </review>
+        </reviews>
     </product>
 
     <product>
@@ -92,7 +114,6 @@
         <inStock>true</inStock>
         <releaseDate>2024-02-14</releaseDate>
         <lastUpdated>2025-03-05T09:15:30</lastUpdated>
-        <rating>3.9</rating>
         <tags>
             <tag>konyha</tag>
             <tag>háztartás</tag>

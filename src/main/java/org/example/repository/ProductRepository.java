@@ -1,14 +1,14 @@
 package org.example.repository;
 
-import jaxb.org.example.models.products.ProductCatalog;
-import jaxb.org.example.models.products.ProductType;
+import jaxb.org.example.models.products.v1.ProductCatalogType;
+import jaxb.org.example.models.products.v1.ProductType;
 import org.example.config.DBConnection;
 
 import java.sql.*;
 
 public class ProductRepository {
 
-    public static void insert(ProductCatalog catalog){
+    public static void insert(ProductCatalogType catalog){
         final String sql =
         """
         INSERT INTO products(

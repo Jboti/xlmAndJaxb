@@ -2,7 +2,8 @@
 
 
 <productCatalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="../xsd/products.xsd">
+                xsi:noNamespaceSchemaLocation="../xsd/products-v1.xsd"
+                version="v1">
 
     <product>
         <sku>ELEC-001-FEK</sku>

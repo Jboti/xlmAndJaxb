@@ -2,15 +2,16 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="productCatalog">
-        <xs:complexType>
-            <xs:sequence>
+    <xs:element name="productCatalog" type="ProductCatalogType"/>
 
-                <xs:element name="product" type="ProductType" maxOccurs="unbounded"/>
+    <xs:complexType name="ProductCatalogType">
+        <xs:sequence>
 
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+            <xs:element name="product" type="ProductType" maxOccurs="unbounded"/>
+
+        </xs:sequence>
+        <xs:attribute name="version" use="required"/>
+    </xs:complexType>
 
 
     <xs:complexType name="ProductType">

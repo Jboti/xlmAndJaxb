@@ -43,16 +43,31 @@
 
                 <executions>
                     <execution>
-                        <id>generate-products</id>
+                        <id>generate-products-v1</id>
                         <goals>
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/main/resources/xsd/products.xsd</source>
+                                <source>src/main/resources/xsd/products-v1.xsd</source>
                             </sources>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
-                            <packageName>jaxb.org.example.models.products</packageName>
+                            <packageName>jaxb.org.example.models.products.v1</packageName>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>generate-products-v2</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/resources/xsd/products-v2.xsd</source>
+                            </sources>
+                            <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                            <packageName>jaxb.org.example.models.products.v2</packageName>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>

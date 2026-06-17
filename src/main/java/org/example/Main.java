@@ -1,7 +1,7 @@
 package org.example;
 
 import jaxb.org.example.models.customers.Customers;
-import jaxb.org.example.models.products.ProductCatalog;
+import jaxb.org.example.models.products.v1.ProductCatalogType;
 import org.example.config.DBConnection;
 import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
@@ -26,9 +26,9 @@ public class Main {
         if (!testDatabaseConnection()) return;
 
         xmlToDatabase(
-                XML_PATH+"/product.xml",
-                XSD_PATH+"/product.xsd",
-                ProductCatalog.class,
+                XML_PATH+"/product-v1.xml",
+                XSD_PATH+"/product-v1.xsd",
+                ProductCatalogType.class,
                 ProductRepository::insert
         );
 
