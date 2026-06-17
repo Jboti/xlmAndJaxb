@@ -12,78 +12,79 @@ import org.example.xml.XmlWriter;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Main {
 
-    private static final String XML_PATH = "src/main/resources/products.xml";
-    private static final String CUSTOMERS_OUTPUT_PATH = "src/main/resources/customers.xml";
+    private static final String RESOURCE_PATH = "src/main/resources";
+
 
     public static void main(String[] args) {
 
-        //xmlToDatabase();
-        databaseToXml();
+        if (!testDatabaseConnection()) return;
+
+        xmlToDatabase(
+                RESOURCE_PATH+"/product.xml",
+                RESOURCE_PATH+"/product.xsd",
+                ProductCatalog.class,
+                ProductRepository::insert
+        );
+
+        databaseToXml(
+                CustomerRepository::getAll,
+                Customers.class,
+                RESOURCE_PATH+"/customers.xml",
+                RESOURCE_PATH+"/customers.xsd"
+        );
 
     }
 
-    private static void xmlToDatabase() {
-        // Database Connection
-        if (!testDatabaseConnection()) return;
+    private static <T> void xmlToDatabase(
+            String xml,
+            String xsd,
+            Class<T> cls,
+            Consumer<T> consumer
+    ) {
 
-        // XML Validation
-        final boolean validXml = XmlValidator.validate(XML_PATH);
+        if(!XmlValidator.validate(xml,xsd)) return;
 
-        if(!validXml){
-            System.err.println("XML file is invalid.");
-            return;
-        }
-        System.out.println("Xml is valid.");
+        T data = XmlParser.parse(cls, xml);
 
-        // XML Parsing
-        ProductCatalog catalog = XmlParser.parse(XML_PATH);
-
-        if(catalog == null){
+        if(data == null){
             System.err.println("Could not parse XML into Java Objects.");
             return;
         }
-
         System.out.println("Successfully parsed XML into Java Objects.");
 
-        /*
-        System.out.println("Product count: " + catalog.getProduct().size());
-        for(Product product : catalog.getProduct()){
-            System.out.println();
-            System.out.println("SKU: " + product.getSku());
-            System.out.println("Name: " + product.getName());
-            System.out.println("Category: " + product.getCategory());
-            System.out.println("Price: " + product.getPrice() + " Ft");
-        }
-        */
+        consumer.accept(data);
 
-        // Insert into Database
-
-        for(Product product : catalog.getProduct()){
-            ProductRepository.insertProduct(product);
-        }
-
-        System.out.println("Insert finished.");
+        System.out.println("Insertion finished.");
     }
 
-    private static void databaseToXml() {
-        // Database Connection
-        if (!testDatabaseConnection()) return;
+    private static <T> void databaseToXml(
+            Supplier<T> supplier,
+            Class<T> cls,
+            String outputPath,
+            String xsd
+    ) {
 
-        // Fetch data
-        Customers customers = CustomerRepository.getAllCustomers();
+        T data = supplier.get();
 
-        if(customers == null) {
-            System.err.println("Couldnt fetch customers data from database.");
+        if(data == null) {
+            System.err.println("Failed to fetch data from database.");
             return;
         }
-        System.out.println("Successfully fetched customer data.");
+        System.out.println("Successfully fetched data.");
 
-        // Write data to XML
-        XmlWriter.writeCustomers(customers,CUSTOMERS_OUTPUT_PATH );
+        XmlWriter.write(cls, data, outputPath);
 
+        if(!XmlValidator.validate(outputPath,xsd)) {
+            System.err.println("Written XML is invalid for schema.");
+            return;
+        }
+
+        System.out.println("Written XML is valid for schema.");
     }
 
 

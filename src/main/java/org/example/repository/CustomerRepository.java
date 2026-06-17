@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class CustomerRepository {
 
 
-    public static Customers getAllCustomers() {
+    public static Customers getAll() {
         String sql = """
             SELECT *
             FROM customers c

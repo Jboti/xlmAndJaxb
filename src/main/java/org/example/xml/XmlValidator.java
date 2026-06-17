@@ -12,15 +12,15 @@ import java.io.IOException;
 
 public class XmlValidator {
 
-    private static final String XSD_PATH = "src/main/resources/products.xsd";
 
-    public static boolean validate(String xmlPath){
+    public static boolean validate(String xmlPath, String xsdPath){
         try{
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new File(XSD_PATH));
+            Schema schema = factory.newSchema(new File(xsdPath));
             Validator validator =  schema.newValidator();
             validator.validate(new StreamSource(new File(xmlPath)));
 
+            System.out.println("XML is valid for schema.");
             return true;
         }catch(SAXException e){
             System.err.println("XML validation failed: ");
