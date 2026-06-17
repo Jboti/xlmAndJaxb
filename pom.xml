@@ -42,7 +42,6 @@
                 <version>3.1.0</version>
 
                 <executions>
-
                     <execution>
                         <id>generate-products</id>
                         <goals>
@@ -50,10 +49,10 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/main/resources/products.xsd</source>
+                                <source>src/main/resources/xsd/products.xsd</source>
                             </sources>
-                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                            <packageName>org.example.products.model</packageName>
+                            <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                            <packageName>jaxb.org.example.models.products</packageName>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>
@@ -65,14 +64,13 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/main/resources/customers.xsd</source>
+                                <source>src/main/resources/xsd/customers.xsd</source>
                             </sources>
-                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                            <packageName>org.example.customers.model</packageName>
+                            <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                            <packageName>jaxb.org.example.models.customers</packageName>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
         </plugins>

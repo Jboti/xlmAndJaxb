@@ -1,8 +1,8 @@
 package org.example.repository;
 
+import jaxb.org.example.models.customers.Customer;
+import jaxb.org.example.models.customers.Customers;
 import org.example.config.DBConnection;
-import org.example.customers.model.Customer;
-import org.example.customers.model.Customers;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;

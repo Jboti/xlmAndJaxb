@@ -1,9 +1,8 @@
 package org.example;
 
+import jaxb.org.example.models.customers.Customers;
+import jaxb.org.example.models.products.ProductCatalog;
 import org.example.config.DBConnection;
-import org.example.customers.model.Customers;
-import org.example.products.model.Product;
-import org.example.products.model.ProductCatalog;
 import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
 import org.example.xml.XmlParser;
@@ -15,9 +14,11 @@ import java.sql.SQLException;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+@SuppressWarnings("SameParameterValue")
 public class Main {
 
-    private static final String RESOURCE_PATH = "src/main/resources";
+    private static final String XSD_PATH = "src/main/resources/xsd";
+    private static final String XML_PATH = "src/main/resources/xml";
 
 
     public static void main(String[] args) {
@@ -25,8 +26,8 @@ public class Main {
         if (!testDatabaseConnection()) return;
 
         xmlToDatabase(
-                RESOURCE_PATH+"/product.xml",
-                RESOURCE_PATH+"/product.xsd",
+                XML_PATH+"/product.xml",
+                XSD_PATH+"/product.xsd",
                 ProductCatalog.class,
                 ProductRepository::insert
         );
@@ -34,8 +35,8 @@ public class Main {
         databaseToXml(
                 CustomerRepository::getAll,
                 Customers.class,
-                RESOURCE_PATH+"/customers.xml",
-                RESOURCE_PATH+"/customers.xsd"
+                XML_PATH+ "/xml/customers.xml",
+                XSD_PATH+ "/xsd/customers.xsd"
         );
 
     }

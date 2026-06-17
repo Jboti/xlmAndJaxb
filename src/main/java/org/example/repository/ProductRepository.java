@@ -1,8 +1,8 @@
 package org.example.repository;
 
+import jaxb.org.example.models.products.ProductCatalog;
+import jaxb.org.example.models.products.ProductType;
 import org.example.config.DBConnection;
-import org.example.products.model.Product;
-import org.example.products.model.ProductCatalog;
 
 import java.sql.*;
 
@@ -31,7 +31,7 @@ public class ProductRepository {
 
                 truncateStmt.executeUpdate();
 
-                for(Product product : catalog.getProduct()) {
+                for(ProductType product : catalog.getProduct()) {
                     stmt.setString(1,product.getSku());
                     stmt.setString(2,product.getName());
                     stmt.setString(3,product.getDescription());
@@ -43,7 +43,7 @@ public class ProductRepository {
                     } else {
                         stmt.setNull(7, Types.NUMERIC);
                     }
-                    stmt.setString(8, product.getStatus());
+                    stmt.setString(8, product.getStatus().name());
                     stmt.setBoolean(9, product.isInStock());
                     stmt.setDate(10, Date.valueOf(product.getReleaseDate().toString()));
                     stmt.setTimestamp(11,
