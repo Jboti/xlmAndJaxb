@@ -5,6 +5,7 @@ import jaxb.org.example.models.products.v1.ProductCatalogType;
 import org.example.config.DBConnection;
 import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
+import org.example.xml.XmlDetector;
 import org.example.xml.XmlParser;
 import org.example.xml.XmlValidator;
 import org.example.xml.XmlWriter;
@@ -24,6 +25,8 @@ public class Main {
     public static void main(String[] args) {
 
         if (!testDatabaseConnection()) return;
+
+        //System.out.println(XmlDetector.detectVersion(XML_PATH+"/.xml"));
 
         xmlToDatabase(
                 XML_PATH+"/product-v1.xml",
