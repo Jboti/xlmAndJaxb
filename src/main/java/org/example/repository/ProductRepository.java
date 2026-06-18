@@ -180,7 +180,7 @@ public class ProductRepository {
                             reviewStmt.setString(1,product.getSku());
                             reviewStmt.setString(2,review.getUsername());
                             reviewStmt.setString(3,review.getComment());
-                            reviewStmt.setBigDecimal(4, BigDecimal.valueOf(Long.parseLong(review.getRating())));
+                            reviewStmt.setInt(4, review.getRating());
 
                             reviewStmt.addBatch();
                         }
