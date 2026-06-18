@@ -105,8 +105,10 @@ public class XmlErrorFormatter {
 
         if (message.contains("cvc-enumeration-valid")) {
             String value = extractBetween(message, "Value '", "'");
+            String enums = extractBetween(message, "enumeration '","'");
+
             if (value != null) {
-                return "A megadott érték: '"+value+"', nem szerepel a lehetséges értékek között.";
+                return "A megadott érték: '"+value+"', nem szerepel a lehetséges értékek között: " + enums;
             }
         }
 
