@@ -1,7 +1,7 @@
 package org.example;
 
 import jaxb.org.example.models.customers.Customers;
-import jaxb.org.example.models.products.v1.ProductCatalogType;
+import jaxb.org.example.models.products.v2.ProductCatalogType;
 import org.example.config.DBConnection;
 import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
@@ -12,6 +12,7 @@ import org.example.xml.XmlWriter;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -26,20 +27,19 @@ public class Main {
 
         if (!testDatabaseConnection()) return;
 
-        //System.out.println(XmlDetector.detectVersion(XML_PATH+"/.xml"));
-
         xmlToDatabase(
-                XML_PATH+"/product-v1.xml",
-                XSD_PATH+"/product-v1.xsd",
-                ProductCatalogType.class,
+                XML_PATH+"/productsV2.xml",
+                XSD_PATH+"/products",
+                "products",
+                "ProductCatalogType",
                 ProductRepository::insert
         );
 
         databaseToXml(
                 CustomerRepository::getAll,
                 Customers.class,
-                XML_PATH+ "/xml/customers.xml",
-                XSD_PATH+ "/xsd/customers.xsd"
+                XML_PATH+ "/customers.xml",
+                XSD_PATH+ "/customers"
         );
 
     }
@@ -47,11 +47,24 @@ public class Main {
     private static <T> void xmlToDatabase(
             String xml,
             String xsd,
-            Class<T> cls,
-            Consumer<T> consumer
+            String packageName,
+            String className,
+            BiConsumer<T,String> consumer
     ) {
 
-        if(!XmlValidator.validate(xml,xsd)) return;
+        String version = XmlDetector.detectVersion(xml);
+
+        String completeXsd = xsd+"-"+version+".xsd";
+        if(!XmlValidator.validate(xml, completeXsd)) return;
+
+        String fullClassName = "jaxb.org.example.models." + packageName + "." + version.toLowerCase() + "." + className;
+        Class<T> cls = null;
+        try {
+            cls = (Class<T>) Class.forName(fullClassName);
+        } catch (ClassNotFoundException e) {
+            System.err.println("Failed to get class for parsing.");
+        }
+        if(null == cls) return;
 
         T data = XmlParser.parse(cls, xml);
 
@@ -61,7 +74,7 @@ public class Main {
         }
         System.out.println("Successfully parsed XML into Java Objects.");
 
-        consumer.accept(data);
+        consumer.accept(data, version);
 
         System.out.println("Insertion finished.");
     }
@@ -83,7 +96,7 @@ public class Main {
 
         XmlWriter.write(cls, data, outputPath);
 
-        if(!XmlValidator.validate(outputPath,xsd)) {
+        if(!XmlValidator.validate(outputPath,xsd+".xsd")) {
             System.err.println("Written XML is invalid for schema.");
             return;
         }

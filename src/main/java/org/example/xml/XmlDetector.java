@@ -22,7 +22,8 @@ public class XmlDetector {
                     String version = reader.getAttributeValue(null,"version");
 
                     if(null == version || version.isBlank()) {
-                        throw new IllegalArgumentException("Missing root version attribute");
+                        System.err.println("Missing root version attribute");
+                        return "";
                     }
                     return version;
                 }

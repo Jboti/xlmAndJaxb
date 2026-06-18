@@ -33,7 +33,7 @@
                 <rating>1</rating>
             </review>
             <review>
-                <username></username>
+                <username>Jane Doe</username>
                 <rating>5</rating>
             </review>
         </reviews>
@@ -95,7 +95,7 @@
         
         <reviews>
             <review>
-                <username></username>
+                <username>John Doe</username>
                 <comment>Hasznos</comment>
                 <rating>5</rating>
             </review>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:redefine schemaLocation="products-v1.xsd">
@@ -16,13 +15,13 @@
 
     </xs:redefine>
 
-    
+
     <xs:complexType name="ReviewsType">
         <xs:sequence>
             <xs:element name="review" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="username" type="xs:string" default="anonymus"/>
+                        <xs:element name="username" type="xs:string"/>
                         <xs:element name="comment" type="xs:string" minOccurs="0"/>
                         <xs:element name="rating" type="xs:string"/>
                     </xs:sequence>
@@ -30,5 +29,18 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:element name="product">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ProductType"/>
+            </xs:complexContent>
+        </xs:complexType>
+
+        <xs:unique name="uniqueReviewUsernamePerProduct">
+            <xs:selector xpath="reviews/review"/>
+            <xs:field xpath="username"/>
+        </xs:unique>
+    </xs:element>
 
 </xs:schema>

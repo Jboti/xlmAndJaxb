@@ -4,6 +4,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 
 public class XmlParser {
@@ -13,8 +14,8 @@ public class XmlParser {
             JAXBContext context = JAXBContext.newInstance(cls);
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
-            return (T) unmarshaller.unmarshal(new File(xmlPath));
-        }catch(JAXBException e){
+            return unmarshaller.unmarshal(new StreamSource(new File(xmlPath)), cls).getValue();
+        } catch(JAXBException e) {
             System.err.println("Failed to unmarshal XML: ");
             System.err.println(e.getMessage());
             return null;
