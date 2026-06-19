@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<productCatalogType>
+    <product>
+        <sku>ELEC-001-FEK</sku>
+        <name>Vezeték nélküli zajszűrő fejhallgató</name>
+        <description>Over-ear Bluetooth fejhallgató 30 órás akkumulátorral és aktív zajszűréssel.</description>
+        <category>Elektronika</category>
+        <price>54990</price>
+        <stockQuantity>82</stockQuantity>
+        <weightKg>0.285</weightKg>
+        <status>available</status>
+        <inStock>true</inStock>
+        <releaseDate>2023-09-15</releaseDate>
+        <lastUpdated>2024-11-20T08:30:00.000+01:00</lastUpdated>
+        <rating>3.0</rating>
+        <tags>
+            <tag>audio</tag>
+            <tag>bluetooth</tag>
+            <tag>vezetéknélküli</tag>
+        </tags>
+        <manufacturer>SoundWave Kft.</manufacturer>
+        <warrantyYears>2</warrantyYears>
+    </product>
+    <product>
+        <sku>BUTO-042-TOL</sku>
+        <name>Tömör tölgyfa íróasztal</name>
+        <description>Kézzel készített tölgyfa íróasztal, 140x70 cm, két fiókkal.</description>
+        <category>Bútor</category>
+        <price>189900</price>
+        <stockQuantity>14</stockQuantity>
+        <weightKg>38.500</weightKg>
+        <status>available</status>
+        <inStock>true</inStock>
+        <releaseDate>2022-03-01</releaseDate>
+        <lastUpdated>2025-01-10T14:00:00.000+01:00</lastUpdated>
+        <rating>4.5</rating>
+        <tags>
+            <tag>bútor</tag>
+            <tag>fa</tag>
+            <tag>iroda</tag>
+        </tags>
+        <manufacturer>NordicCraft Magyarország</manufacturer>
+        <warrantyYears>5</warrantyYears>
+    </product>
+    <product>
+        <sku>KNYV-198-SC</sku>
+        <name>Tiszta kód</name>
+        <description>Az agilis szoftverfejlesztés kézikönyve Robert C. Martin tollából.</description>
+        <category>Könyvek</category>
+        <price>8990</price>
+        <stockQuantity>0</stockQuantity>
+        <status>out_of_stock</status>
+        <inStock>false</inStock>
+        <releaseDate>2008-08-01</releaseDate>
+        <lastUpdated>2024-06-01T00:00:00.000+02:00</lastUpdated>
+        <rating>5.0</rating>
+        <tags>
+            <tag>programozás</tag>
+            <tag>java</tag>
+        </tags>
+        <manufacturer>Prentice Hall</manufacturer>
+        <warrantyYears>0</warrantyYears>
+    </product>
+    <product>
+        <sku>KONY-077-EZU</sku>
+        <name>Rozsdamentes acél turmixgép</name>
+        <description>1200 W-os asztali turmixgép 6 fokozattal és pulzáló üzemmóddal.</description>
+        <category>Konyha</category>
+        <price>32490</price>
+        <stockQuantity>55</stockQuantity>
+        <weightKg>2.100</weightKg>
+        <status>available</status>
+        <inStock>true</inStock>
+        <releaseDate>2024-02-14</releaseDate>
+        <lastUpdated>2025-03-05T09:15:30.000+01:00</lastUpdated>
+        <tags>
+            <tag>konyha</tag>
+            <tag>háztartás</tag>
+        </tags>
+        <manufacturer>BlendMaster Európa</manufacturer>
+        <warrantyYears>1</warrantyYears>
+    </product>
+</productCatalogType>

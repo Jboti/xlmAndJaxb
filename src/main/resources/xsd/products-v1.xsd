@@ -10,7 +10,13 @@
             <xs:element name="product" type="ProductType" maxOccurs="unbounded"/>
 
         </xs:sequence>
-        <xs:attribute name="version" use="required"/>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="v\d{1,}"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 
 

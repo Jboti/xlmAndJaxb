@@ -1,7 +1,5 @@
 package org.example;
 
-import jaxb.org.example.models.customers.Customers;
-import jaxb.org.example.models.products.v2.ProductCatalogType;
 import org.example.config.DBConnection;
 import org.example.repository.CustomerRepository;
 import org.example.repository.ProductRepository;
@@ -13,8 +11,7 @@ import org.example.xml.XmlWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 @SuppressWarnings("SameParameterValue")
 public class Main {
@@ -27,6 +24,7 @@ public class Main {
 
         if (!testDatabaseConnection()) return;
 
+        /*
         xmlToDatabase(
                 XML_PATH+"/productsV2.xml",
                 XSD_PATH+"/products",
@@ -36,17 +34,30 @@ public class Main {
         );
 
         databaseToXml(
-                CustomerRepository::getAll,
-                Customers.class,
-                XML_PATH+ "/customers.xml",
-                XSD_PATH+ "/customers"
+            "latest",
+            ProductRepository::read,
+            XML_PATH+"/testProductRead.xml"
+        );
+       */
+
+        xmlToDatabase(
+                XML_PATH+"/customers.xml",
+                XSD_PATH+"/customers",
+                "customers",
+                "Customers",
+                CustomerRepository::insert
         );
 
+        databaseToXml(
+                "latest",
+                CustomerRepository::read,
+                XML_PATH+"/testCustomersRead.xml"
+        );
     }
 
     private static <T> void xmlToDatabase(
             String xml,
-            String xsd,
+            String rootXsd,
             String packageName,
             String className,
             BiConsumer<T,String> consumer
@@ -54,7 +65,7 @@ public class Main {
 
         String version = XmlDetector.detectVersion(xml);
 
-        String completeXsd = xsd+"-"+version+".xsd";
+        String completeXsd = rootXsd+"-"+version+".xsd";
         if(!XmlValidator.validate(xml, completeXsd)) return;
 
         String fullClassName = "jaxb.org.example.models." + packageName + "." + version.toLowerCase() + "." + className;
@@ -80,13 +91,12 @@ public class Main {
     }
 
     private static <T> void databaseToXml(
-            Supplier<T> supplier,
-            Class<T> cls,
-            String outputPath,
-            String xsd
+            String version,
+            Function<String,T> function,
+            String outputPath
     ) {
 
-        T data = supplier.get();
+        T data = function.apply(version);
 
         if(data == null) {
             System.err.println("Failed to fetch data from database.");
@@ -94,14 +104,7 @@ public class Main {
         }
         System.out.println("Successfully fetched data.");
 
-        XmlWriter.write(cls, data, outputPath);
-
-        if(!XmlValidator.validate(outputPath,xsd+".xsd")) {
-            System.err.println("Written XML is invalid for schema.");
-            return;
-        }
-
-        System.out.println("Written XML is valid for schema.");
+        XmlWriter.write(data, outputPath);
     }
 
 

@@ -79,10 +79,10 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/main/resources/xsd/customers.xsd</source>
+                                <source>src/main/resources/xsd/customers-v1.xsd</source>
                             </sources>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
-                            <packageName>jaxb.org.example.models.customers</packageName>
+                            <packageName>jaxb.org.example.models.customers.v1</packageName>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>
