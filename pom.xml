@@ -73,7 +73,7 @@
                     </execution>
 
                     <execution>
-                        <id>generate-customers</id>
+                        <id>generate-customers-v1</id>
                         <goals>
                             <goal>xjc</goal>
                         </goals>
@@ -83,6 +83,21 @@
                             </sources>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
                             <packageName>jaxb.org.example.models.customers.v1</packageName>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>generate-customers-v2</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/resources/xsd/customers-v2.xsd</source>
+                            </sources>
+                            <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                            <packageName>jaxb.org.example.models.customers.v2</packageName>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>

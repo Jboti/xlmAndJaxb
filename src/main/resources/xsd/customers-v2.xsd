@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:redefine schemaLocation="customers-v1.xsd">
+
+        <xs:complexType name="customerType">
+            <xs:complexContent>
+                <xs:extension base="customerType">
+                    <xs:sequence>
+                        <xs:element name="gender" default="unknown">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="unknown"/>
+                                    <xs:enumeration value="male"/>
+                                    <xs:enumeration value="female"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+    </xs:redefine>
+
+</xs:schema>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<customers>
+<customers version="v2">
     <customer>
         <customerCode>CUST001</customerCode>
         <fullName>Anna Kovács</fullName>
@@ -28,6 +28,6 @@
         <age>22</age>
         <active>false</active>
         <signupDate>2022-06-19</signupDate>
-        <gender>unknown</gender>
+        <gender></gender>
     </customer>
 </customers>

@@ -41,7 +41,7 @@ public class Main {
        */
 
         xmlToDatabase(
-                XML_PATH+"/customers.xml",
+                XML_PATH+"/customersV2.xml",
                 XSD_PATH+"/customers",
                 "customers",
                 "Customers",

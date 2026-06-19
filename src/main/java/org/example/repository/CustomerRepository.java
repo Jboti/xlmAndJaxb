@@ -13,10 +13,15 @@ public class CustomerRepository {
         return (jaxb.org.example.models.customers.v1.Customers) data;
     }
 
+    private static jaxb.org.example.models.customers.v2.Customers asV2(Object data) {
+        return (jaxb.org.example.models.customers.v2.Customers) data;
+    }
+
     private static String getVersion(String version) {
         try {
             return switch (version) {
-                case "v1", "latest" -> "v1";
+                case "v1" -> "v1";
+                case "v2", "latest" -> "v2";
                 default -> throw new IllegalArgumentException();
             };
         } catch (IllegalArgumentException e) {
@@ -31,6 +36,7 @@ public class CustomerRepository {
 
         switch (validVersion) {
             case "v1" -> insertV1(asV1(data));
+            case "v2" -> insertV2(asV2(data));
         }
     }
 
@@ -40,6 +46,7 @@ public class CustomerRepository {
 
         return switch (validVersion) {
             case "v1" -> (T) readV1();
+            case "v2" -> (T) readV2();
             default -> null;
         };
     }
@@ -63,7 +70,7 @@ public class CustomerRepository {
 
                 truncateStmt.executeUpdate();
 
-                for(jaxb.org.example.models.customers.v1.Customer customer : customers.getCustomer()) {
+                for(jaxb.org.example.models.customers.v1.CustomerType customer : customers.getCustomer()) {
 
                     stmt.setString(1,customer.getCustomerCode());
                     stmt.setString(2,customer.getFullName());
@@ -97,6 +104,59 @@ public class CustomerRepository {
         }
     }
 
+    private static void insertV2(jaxb.org.example.models.customers.v2.Customers customers) {
+        final String sql =
+                """
+                    INSERT INTO customers(
+                        customer_code,full_name,email,city,age,active,signup_date,gender
+                    ) VALUES (?,?,?,?,?,?,?,?)
+                """;
+        final String truncateSql = "TRUNCATE TABLE customers;";
+
+        try(Connection conn = DBConnection.getConnection()){
+
+            conn.setAutoCommit(false);
+
+            try(PreparedStatement stmt = conn.prepareStatement(sql);
+                PreparedStatement truncateStmt = conn.prepareStatement(truncateSql)) {
+
+                truncateStmt.executeUpdate();
+
+                for(jaxb.org.example.models.customers.v2.CustomerType customer : customers.getCustomer()) {
+
+                    stmt.setString(1,customer.getCustomerCode());
+                    stmt.setString(2,customer.getFullName());
+                    stmt.setString(3,customer.getEmail());
+                    stmt.setString(4,customer.getCity());
+                    BigInteger customerAge = customer.getAge();
+                    if(null == customerAge) {
+                        stmt.setNull(5, Types.NUMERIC);
+                    } else {
+                        stmt.setInt(5,customerAge.intValue());
+                    }
+                    stmt.setBoolean(6,customer.isActive());
+                    stmt.setDate(7,
+                            new Date(customer.getSignupDate().toGregorianCalendar().getTime().getTime())
+                    );
+                    stmt.setString(8,customer.getGender());
+
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+                System.err.println("Failed statement, rolling back...");
+                conn.rollback();
+            }
+
+            conn.commit();
+
+        } catch (SQLException e) {
+            System.err.println("Insert failed.");
+        }
+    }
+
     private static jaxb.org.example.models.customers.v1.Customers readV1() {
         String sql = """
             SELECT *
@@ -111,8 +171,8 @@ public class CustomerRepository {
             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                jaxb.org.example.models.customers.v1.Customer customer =
-                        new jaxb.org.example.models.customers.v1.Customer();
+                jaxb.org.example.models.customers.v1.CustomerType customer =
+                        new jaxb.org.example.models.customers.v1.CustomerType();
 
                 customer.setCustomerCode(rs.getString("customer_code"));
                 customer.setFullName(rs.getString("full_name"));
@@ -142,6 +202,56 @@ public class CustomerRepository {
           System.err.println("Failed to fetch customer data.");
           System.err.println(e.getMessage());
           return null;
+        }
+        return customers;
+    }
+
+    private static jaxb.org.example.models.customers.v2.Customers readV2() {
+        String sql = """
+            SELECT *
+            FROM customers c;
+            """;
+
+        jaxb.org.example.models.customers.v2.Customers customers =
+                new jaxb.org.example.models.customers.v2.Customers();
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                jaxb.org.example.models.customers.v2.CustomerType customer =
+                        new jaxb.org.example.models.customers.v2.CustomerType();
+
+                customer.setCustomerCode(rs.getString("customer_code"));
+                customer.setFullName(rs.getString("full_name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCity(rs.getString("city"));
+
+                final int age = rs.getInt("age");
+                if(!rs.wasNull()) {
+                    customer.setAge(BigInteger.valueOf(age));
+                }
+
+                customer.setActive(rs.getBoolean("active"));
+                try{
+                    customer.setSignupDate(
+                            DatatypeFactory
+                                    .newInstance()
+                                    .newXMLGregorianCalendar(rs.getDate("signup_date").toString())
+                    );
+                } catch (DatatypeConfigurationException e) {
+                    System.err.println(e.getMessage());
+                    continue;
+                }
+                customer.setGender(rs.getString("gender"));
+
+                customers.getCustomer().add(customer);
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to fetch customer data.");
+            System.err.println(e.getMessage());
+            return null;
         }
         return customers;
     }
